@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Development Fundamentals | Arsh.dev</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="index.html" class="logo">Arsh<span>.dev</span></a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="c-language.html">C Language</a></li>
+          <li><a href="core-cs.html">Core CS</a></li>
+          <li><a href="web-dev.html" class="active">Web Dev</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content container">
+    <div class="page-intro">
+      <a href="index.html" class="back-link">&larr; Back to Home</a>
+      <h1 class="section-title">Vanilla Web Architecture &amp; CSS Engines</h1>
+      <p class="section-desc">
+        Modern UI design using standard web platform primitives. Learn semantic page structures, layout models, and clean styling without third-party CSS frameworks.
+      </p>
+    </div>
+
+    <!-- Semantic HTML5 -->
+    <section class="doc-section">
+      <h2>1. Semantic HTML5: Structure Over Division</h2>
+      <p>
+        Replace generic <code>&lt;div&gt;</code> tags with structural elements that provide context to assistive technologies, search crawlers, and future developers:
+      </p>
+
+      <div class="roadmap-grid">
+        <div class="roadmap-card">
+          <span class="roadmap-step">Navigation</span>
+          <h4>&lt;header&gt; &amp; &lt;nav&gt;</h4>
+          <p>Wraps global page titles, navigation bars, and search inputs across the site.</p>
+        </div>
+        <div class="roadmap-card">
+          <span class="roadmap-step">Core Body</span>
+          <h4>&lt;main&gt; &amp; &lt;article&gt;</h4>
+          <p>Declares primary document content and distinct, self-contained units (such as blog posts or project cards).</p>
+        </div>
+        <div class="roadmap-card">
+          <span class="roadmap-step">Grouping</span>
+          <h4>&lt;section&gt; &amp; &lt;aside&gt;</h4>
+          <p>Divides content into themed areas with headings, or handles related side content.</p>
+        </div>
+        <div class="roadmap-card">
+          <span class="roadmap-step">Conclusion</span>
+          <h4>&lt;footer&gt;</h4>
+          <p>Contains copyright statements, terms of service, and secondary navigation links.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CSS Box Model -->
+    <section class="doc-section">
+      <h2>2. Mastering the CSS Box Model</h2>
+      <p>
+        Every HTML element rendered in a browser is enclosed in a four-layered rectangular container:
+      </p>
+      
+      <div class="callout">
+        <h4>Content &rarr; Padding &rarr; Border &rarr; Margin</h4>
+        <p>
+          Always apply <code>box-sizing: border-box;</code> globally. Under the default <code>content-box</code>, adding padding or borders expands the element's rendered width. With <code>border-box</code>, dimensions remain predictable.
+        </p>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span>box-model-rule.css</span>
+          <span>CSS Architecture</span>
+        </div>
+        <pre><code><span class="token-com">/* Modern universally applied reset rule */</span>
+*, *::before, *::after {
+    <span class="token-kw">box-sizing</span>: border-box;
+    <span class="token-kw">margin</span>: <span class="token-kw">0</span>;
+    <span class="token-kw">padding</span>: <span class="token-kw">0</span>;
+}
+
+<span class="token-com">/* Predictable component layout */</span>
+.card {
+    <span class="token-kw">width</span>: <span class="token-kw">300px</span>;        <span class="token-com">/* Total element width is locked at 300px */</span>
+    <span class="token-kw">padding</span>: <span class="token-kw">20px</span>;      <span class="token-com">/* Padding sits inside the 300px boundary */</span>
+    <span class="token-kw">border</span>: <span class="token-kw">2px solid</span> var(--border-color);
+    <span class="token-kw">margin</span>: <span class="token-kw">16px</span>;       <span class="token-com">/* Margin creates outside spacing */</span>
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- Flexbox vs Grid -->
+    <section class="doc-section">
+      <h2>3. Modern Layout: Flexbox vs. CSS Grid</h2>
+      <p>Choose the layout algorithm best suited to your content's dimensional requirements:</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>CSS Flexbox (1-Dimensional)</th>
+            <th>CSS Grid (2-Dimensional)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Primary Axis</strong></td>
+            <td>Row <em>or</em> Column at a time</td>
+            <td>Rows <em>and</em> Columns simultaneously</td>
+          </tr>
+          <tr>
+            <td><strong>Best Used For</strong></td>
+            <td>Navigation menus, button groups, vertical centering</td>
+            <td>Full page layouts, dashboard panels, image grids</td>
+          </tr>
+          <tr>
+            <td><strong>Content vs. Grid</strong></td>
+            <td>Content-driven: Items size themselves</td>
+            <td>Layout-driven: Items conform to track lines</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span>responsive_grid.css</span>
+          <span>Adaptive Layout without Media Queries</span>
+        </div>
+        <pre><code><span class="token-com">/* Cards automatically wrap and balance their width */</span>
+.responsive-cards {
+    <span class="token-kw">display</span>: grid;
+    <span class="token-kw">grid-template-columns</span>: repeat(auto-fit, minmax(<span class="token-kw">280px</span>, <span class="token-kw">1fr</span>));
+    <span class="token-kw">gap</span>: <span class="token-kw">1.5rem</span>;
+}
+
+<span class="token-com">/* Flexbox for aligning interior components */</span>
+.card-header {
+    <span class="token-kw">display</span>: flex;
+    <span class="token-kw">justify-content</span>: space-between;
+    <span class="token-kw">align-items</span>: center;
+}</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Arsh.dev • Modern Web Standards Module</p>
+    </div>
+  </footer>
+
+</body>
+</html>

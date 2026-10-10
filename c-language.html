@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C Language Deep-Dive | Arsh.dev</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="index.html" class="logo">Arsh<span>.dev</span></a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="c-language.html" class="active">C Language</a></li>
+          <li><a href="core-cs.html">Core CS</a></li>
+          <li><a href="web-dev.html">Web Dev</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content container">
+    <div class="page-intro">
+      <a href="index.html" class="back-link">&larr; Back to Home</a>
+      <h1 class="section-title">C Language Systems &amp; Programming Guide</h1>
+      <p class="section-desc">
+        From compilation lifecycles to pointer dereferencing and heap allocations. Written for engineering university syllabi (BEU/PPS) and systems foundations.
+      </p>
+    </div>
+
+    <!-- Complete Roadmap Section -->
+    <section class="doc-section">
+      <h2>1. The Complete Mastery Roadmap</h2>
+      <p>A systematic phase-by-phase journey from zero memory knowledge to writing custom file I/O operations.</p>
+      
+      <div class="roadmap-grid">
+        <div class="roadmap-card">
+          <span class="roadmap-step">Phase 01</span>
+          <h4>Syntax &amp; Memory Basics</h4>
+          <p>Compilation process (Preprocess, Compile, Assemble, Link), primitive data types, format specifiers, ASCII values, and operators.</p>
+        </div>
+        <div class="roadmap-card">
+          <span class="roadmap-step">Phase 02</span>
+          <h4>Control &amp; Iteration</h4>
+          <p>Conditional branches (<code>if-else</code>, <code>switch-case</code>), loop boundaries (<code>for</code>, <code>while</code>, <code>do-while</code>), and break/continue statements.</p>
+        </div>
+        <div class="roadmap-card">
+          <span class="roadmap-step">Phase 03</span>
+          <h4>Modular Functions</h4>
+          <p>Function signatures, stack activation records, parameter passing (Call by Value vs. Call by Reference), and recursion bases.</p>
+        </div>
+        <div class="roadmap-card">
+          <span class="roadmap-step">Phase 04</span>
+          <h4>Arrays &amp; Strings</h4>
+          <p>Contiguous memory layout, index calculations, multi-dimensional arrays, null termination (<code>'\0'</code>), and string standard library functions.</p>
+        </div>
+        <div class="roadmap-card">
+          <span class="roadmap-step">Phase 05</span>
+          <h4>Pointers &amp; DMA</h4>
+          <p>Address-of (<code>&amp;</code>) and dereference (<code>*</code>) operators, pointer arithmetic, memory management (<code>malloc</code>, <code>calloc</code>, <code>realloc</code>, <code>free</code>).</p>
+        </div>
+        <div class="roadmap-card">
+          <span class="roadmap-step">Phase 06</span>
+          <h4>User Types &amp; Files</h4>
+          <p>Structures (<code>struct</code>), unions, byte alignment, memory padding, file pointers, streams (<code>fopen</code>, <code>fread</code>, <code>fwrite</code>, <code>fclose</code>).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Essential Program 1: Electricity Slab Billing -->
+    <section class="doc-section">
+      <h2>2. Production Engine: Electricity Slab Billing</h2>
+      <p>
+        Calculates progressive tiered billing with meter rents and conditional surcharges. Demonstrates correct cumulative subtraction instead of flat rate multiplication.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span>electricity_billing.c</span>
+          <span>C99 Standard</span>
+        </div>
+        <pre><code><span class="token-com">#include &lt;stdio.h&gt;</span>
+
+<span class="token-type">int</span> <span class="token-fn">main</span>(<span class="token-type">void</span>) {
+    <span class="token-type">float</span> units, bill = <span class="token-kw">0.0f</span>, surcharge = <span class="token-kw">0.0f</span>, total;
+    <span class="token-type">const float</span> METER_RENT = <span class="token-kw">50.0f</span>;
+
+    <span class="token-fn">printf</span>(<span class="token-kw">"Enter total units consumed: "</span>);
+    <span class="token-kw">if</span> (<span class="token-fn">scanf</span>(<span class="token-kw">"%f"</span>, &amp;units) != <span class="token-kw">1</span> || units &lt; <span class="token-kw">0</span>) {
+        <span class="token-fn">printf</span>(<span class="token-kw">"Invalid unit input.\n"</span>);
+        <span class="token-kw">return</span> <span class="token-kw">1</span>;
+    }
+
+    <span class="token-com">/* Cumulative slab calculation */</span>
+    <span class="token-kw">if</span> (units &lt;= <span class="token-kw">100</span>) {
+        bill = units * <span class="token-kw">3.00f</span>;
+    } <span class="token-kw">else if</span> (units &lt;= <span class="token-kw">200</span>) {
+        bill = (<span class="token-kw">100</span> * <span class="token-kw">3.00f</span>) + ((units - <span class="token-kw">100</span>) * <span class="token-kw">4.50f</span>);
+    } <span class="token-kw">else if</span> (units &lt;= <span class="token-kw">300</span>) {
+        bill = (<span class="token-kw">100</span> * <span class="token-kw">3.00f</span>) + (<span class="token-kw">100</span> * <span class="token-kw">4.50f</span>) + ((units - <span class="token-kw">200</span>) * <span class="token-kw">6.00f</span>);
+    } <span class="token-kw">else</span> {
+        bill = (<span class="token-kw">100</span> * <span class="token-kw">3.00f</span>) + (<span class="token-kw">100</span> * <span class="token-kw">4.50f</span>) + (<span class="token-kw">100</span> * <span class="token-kw">6.00f</span>) + ((units - <span class="token-kw">300</span>) * <span class="token-kw">8.00f</span>);
+    }
+
+    <span class="token-com">/* Add 15% surcharge if consumption cost exceeds Rs. 1000 */</span>
+    <span class="token-kw">if</span> (bill &gt; <span class="token-kw">1000.0f</span>) {
+        surcharge = bill * <span class="token-kw">0.15f</span>;
+    }
+
+    total = bill + surcharge + METER_RENT;
+
+    <span class="token-fn">printf</span>(<span class="token-kw">"\n--- UTILITY INVOICE ---\n"</span>);
+    <span class="token-fn">printf</span>(<span class="token-kw">"Base Consumption Bill: Rs. %.2f\n"</span>, bill);
+    <span class="token-fn">printf</span>(<span class="token-kw">"Surcharge:             Rs. %.2f\n"</span>, surcharge);
+    <span class="token-fn">printf</span>(<span class="token-kw">"Meter Rent:            Rs. %.2f\n"</span>, METER_RENT);
+    <span class="token-fn">printf</span>(<span class="token-kw">"Total Payable:         Rs. %.2f\n"</span>, total);
+
+    <span class="token-kw">return</span> <span class="token-kw">0</span>;
+}</code></pre>
+      </div>
+
+      <div class="callout">
+        <h4>Dry-Run Analysis (Input: units = 250)</h4>
+        <p>1. <code>units &gt; 200</code> and <code>units &lt;= 300</code> triggers Slab 3.</p>
+        <p>2. Slab 1 cost: $100 \times 3.00 = 300.00$.</p>
+        <p>3. Slab 2 cost: $100 \times 4.50 = 450.00$.</p>
+        <p>4. Slab 3 remainder: $(250 - 200) \times 6.00 = 50 \times 6.00 = 300.00$.</p>
+        <p>5. Base Bill: $300 + 450 + 300 = 1050.00$.</p>
+        <p>6. Since $1050.00 &gt; 1000.00$, Surcharge applies: $1050 \times 0.15 = 157.50$.</p>
+        <p>7. Final Total: $1050.00 + 157.50 + 50.00 \text{ (Meter Rent)} = \mathbf{1257.50}$.</p>
+      </div>
+    </section>
+
+    <!-- Essential Program 2: Number Reversal & Factorial -->
+    <section class="doc-section">
+      <h2>3. Algorithmic Kernels: Reversal &amp; Factorial</h2>
+      <p>Fundamental mathematical routines tested in academic computer science papers.</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span>math_kernels.c</span>
+          <span>Iteration &amp; Logic</span>
+        </div>
+        <pre><code><span class="token-com">#include &lt;stdio.h&gt;</span>
+
+<span class="token-com">/* Reverses any 32-bit signed integer safely */</span>
+<span class="token-type">long long</span> <span class="token-fn">reverse_integer</span>(<span class="token-type">int</span> n) {
+    <span class="token-type">long long</span> rev = <span class="token-kw">0</span>;
+    <span class="token-type">int</span> temp = n;
+    <span class="token-kw">while</span> (temp != <span class="token-kw">0</span>) {
+        <span class="token-type">int</span> remainder = temp % <span class="token-kw">10</span>;
+        rev = rev * <span class="token-kw">10</span> + remainder;
+        temp /= <span class="token-kw">10</span>;
+    }
+    <span class="token-kw">return</span> rev;
+}
+
+<span class="token-com">/* Computes Factorial iteratively to avoid stack overflow */</span>
+<span class="token-type">unsigned long long</span> <span class="token-fn">factorial</span>(<span class="token-type">int</span> n) {
+    <span class="token-kw">if</span> (n &lt; <span class="token-kw">0</span>) <span class="token-kw">return</span> <span class="token-kw">0</span>; <span class="token-com">// Undefined</span>
+    <span class="token-type">unsigned long long</span> fact = <span class="token-kw">1</span>;
+    <span class="token-kw">for</span> (<span class="token-type">int</span> i = <span class="token-kw">1</span>; i &lt;= n; ++i) {
+        fact *= i;
+    }
+    <span class="token-kw">return</span> fact;
+}</code></pre>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Iteration (i)</th>
+            <th>Input (temp)</th>
+            <th>Remainder (temp % 10)</th>
+            <th>rev = (rev * 10) + rem</th>
+            <th>Remaining (temp / 10)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Initial</td>
+            <td>1234</td>
+            <td>-</td>
+            <td>0</td>
+            <td>1234</td>
+          </tr>
+          <tr>
+            <td>Step 1</td>
+            <td>1234</td>
+            <td>4</td>
+            <td>4</td>
+            <td>123</td>
+          </tr>
+          <tr>
+            <td>Step 2</td>
+            <td>123</td>
+            <td>3</td>
+            <td>43</td>
+            <td>12</td>
+          </tr>
+          <tr>
+            <td>Step 3</td>
+            <td>12</td>
+            <td>2</td>
+            <td>432</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>Step 4</td>
+            <td>1</td>
+            <td>1</td>
+            <td><strong>4321</strong></td>
+            <td>0 (Loop Ends)</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Pointer & Memory Management -->
+    <section class="doc-section">
+      <h2>4. Memory Management: Pointers &amp; Dynamic Allocation</h2>
+      <p>
+        In C, heap memory is managed manually. Every allocation made via <code>malloc()</code> or <code>calloc()</code> must be paired with an explicit <code>free()</code> call to prevent memory leaks.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span>dma_lifecycle.c</span>
+          <span>Heap Memory</span>
+        </div>
+        <pre><code><span class="token-com">#include &lt;stdio.h&gt;</span>
+<span class="token-com">#include &lt;stdlib.h&gt;</span>
+
+<span class="token-type">int</span> <span class="token-fn">main</span>(<span class="token-type">void</span>) {
+    <span class="token-type">int</span> n = <span class="token-kw">5</span>;
+    <span class="token-type">int</span> *arr = (<span class="token-type">int</span> *)<span class="token-fn">malloc</span>(n * <span class="token-kw">sizeof</span>(<span class="token-type">int</span>));
+
+    <span class="token-kw">if</span> (arr == NULL) {
+        <span class="token-fn">printf</span>(<span class="token-kw">"Heap allocation failed!\n"</span>);
+        <span class="token-kw">return</span> <span class="token-kw">1</span>;
+    }
+
+    <span class="token-com">/* Pointer arithmetic assignment */</span>
+    <span class="token-kw">for</span> (<span class="token-type">int</span> i = <span class="token-kw">0</span>; i &lt; n; i++) {
+        *(arr + i) = (i + <span class="token-kw">1</span>) * <span class="token-kw">10</span>;
+    }
+
+    <span class="token-com">/* Deallocation and pointer safety */</span>
+    <span class="token-fn">free</span>(arr);
+    arr = NULL; <span class="token-com">// Prevents dangling pointer reference</span>
+
+    <span class="token-kw">return</span> <span class="token-kw">0</span>;
+}</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Arsh.dev • C Systems Engineering Module</p>
+    </div>
+  </footer>
+
+</body>
+</html>
