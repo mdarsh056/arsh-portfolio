@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete C Engineering Master Handbook | Arsh</title>
+    <style>
+        :root {
+            --bg-main: #0b1120;
+            --bg-card: #1e293b;
+            --bg-code: #030712;
+            --accent: #38bdf8;
+            --accent-hover: #7dd3fc;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-clr: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.7;
+        }
+
+        /* Top Navbar */
+        nav {
+            position: sticky;
+            top: 0;
+            background-color: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 8%;
+            border-bottom: 1px solid var(--border-clr);
+            z-index: 1000;
+        }
+
+        nav .brand {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        nav .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        nav .nav-links a:hover, nav .nav-links a.active {
+            color: var(--accent);
+        }
+
+        /* Page Layout */
+        .wrapper {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            gap: 30px;
+        }
+
+        /* Sticky Left Sidebar for Quick Jump */
+        .sidebar {
+            flex: 0 0 280px;
+            position: sticky;
+            top: 85px;
+            height: calc(100vh - 110px);
+            overflow-y: auto;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-clr);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .sidebar h4 {
+            color: var(--accent);
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 14px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13.5px;
+            display: block;
+            padding: 6px 10px;
+            border-radius: 5px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: #0f172a;
+            color: var(--accent);
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .header-box {
+            text-align: center;
+            padding: 30px 10px 50px 10px;
+            border-bottom: 1px solid var(--border-clr);
+            margin-bottom: 40px;
+        }
+
+        .header-box h1 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .header-box h1 span {
+            color: var(--accent);
+        }
+
+        .header-box p {
+            color: var(--text-muted);
+            font-size: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Module Sections */
+        .module {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-clr);
+            border-radius: 10px;
+            padding: 32px;
+            margin-bottom: 45px;
+        }
+
+        .module-tag {
+            display: inline-block;
+            background-color: #0f172a;
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 15px;
+            border: 1px solid var(--border-clr);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .module h2 {
+            font-size: 26px;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .concept-block {
+            margin-top: 20px;
+            border-left: 3px solid var(--accent);
+            padding-left: 16px;
+        }
+
+        .concept-block h3 {
+            font-size: 18px;
+            color: #e2e8f0;
+            margin-bottom: 6px;
+        }
+
+        .concept-block p, .concept-block ul {
+            color: #cbd5e1;
+            font-size: 14.5px;
+            margin-bottom: 10px;
+        }
+
+        .concept-block ul {
+            padding-left: 20px;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--bg-code);
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 13px;
+            color: #7dd3fc;
+            margin: 15px 0 25px 0;
+            line-height: 1.5;
+        }
+
+        .problem-badge {
+            display: inline-block;
+            background-color: #0284c7;
+            color: #fff;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            font-size: 13px;
+            border-top: 1px solid var(--border-clr);
+            background-color: #0f172a;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar { display: none; }
+            .wrapper { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <a href="index.html" class="brand">Arsh.dev</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="c-mastery.html" class="active">C Master Handbook</a>
+            <a href="projects.html">All Projects</a>
+        </div>
+    </nav>
+
+    <div class="wrapper">
+        <!-- Sticky Quick Navigation -->
+        <aside class="sidebar">
+            <h4>11 Core Modules</h4>
+            <ul>
+                <li><a href="#mod1">1. Fundamentals & Syntax</a></li>
+                <li><a href="#mod2">2. Operators & Expressions</a></li>
+                <li><a href="#mod3">3. Control Flow & Branching</a></li>
+                <li><a href="#mod4">4. Loops & Iterations</a></li>
+                <li><a href="#mod5">5. Functions & Scope</a></li>
+                <li><a href="#mod6">6. Arrays & Strings</a></li>
+                <li><a href="#mod7">7. Pointers & Addresses</a></li>
+                <li><a href="#mod8">8. User-Defined Data Types</a></li>
+                <li><a href="#mod9">9. Dynamic Memory (DMA)</a></li>
+                <li><a href="#mod10">10. File Handling & Streams</a></li>
+                <li><a href="#mod11">11. Preprocessors & CLI</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+
+            <div class="header-box">
+                <h1>Complete <span>C Systems</span> & Programming Reference</h1>
+                <p>An exhaustive, multi-tier engineering handbook spanning bare-metal hardware interaction, pointer memory arithmetic, and compiler pipeline mechanics with solved algorithmic implementations.</p>
+            </div>
+
+            <!-- MODULE 1 -->
+            <section class="module" id="mod1">
+                <span class="module-tag">Module 1</span>
+                <h2>Fundamentals, Compilation & Syntax</h2>
+                <div class="concept-block">
+                    <h3>Core Concepts & Definitions</h3>
+                    <p><strong>C Architecture & Compilation Pipeline:</strong> C is a middle-level, statically typed language. Source code (`.c`) transitions through 4 deterministic phases:
+                    <ul>
+                        <li><strong>Preprocessing (`gcc -E`):</strong> Expands `#include`, removes comments, processes macros (`.i`).</li>
+                        <li><strong>Compilation (`gcc -S`):</strong> Converts preprocessed C to machine assembly code (`.s`).</li>
+                        <li><strong>Assembly (`gcc -c`):</strong> Converts assembly mnemonics into machine object code (`.o`).</li>
+                        <li><strong>Linking (`gcc`):</strong> Binds object files and standard C runtime libraries (`libc`) into an executable image (`.exe`).</li>
+                    </ul>
+                    <p><strong>Tokens & Storage:</strong> Keywords (32 reserved words), Identifiers (names of variables/functions), and Data Types (`char`: 1B, `int`: 4B, `float`: 4B, `double`: 8B, `void`: incomplete type).</p>
+                </div>
+
+                <span class="problem-badge">Problem 1.1: ASCII Translation & Storage Inspector</span>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    char ch;
+    printf("Enter a character: ");
+    scanf("%c", &ch);
+
+    printf("Character: %c\n", ch);
+    printf("ASCII Integer Value: %d\n", ch);
+    printf("Memory Footprint: %zu byte(s)\n", sizeof(ch));
+    return 0;
+}</code></pre>
+
+                <span class="problem-badge">Problem 1.2: Primitive Memory Footprint & Limits</span>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;limits.h&gt;
+
+int main() {
+    printf("Short Int Size: %zu bytes | Range: [%d to %d]\n", sizeof(short), SHRT_MIN, SHRT_MAX);
+    printf("Standard Int Size: %zu bytes | Range: [%d to %d]\n", sizeof(int), INT_MIN, INT_MAX);
+    return 0;
+}</code></pre>
+            </section>
+
+            <!-- MODULE 2 -->
+            <section class="module" id="mod2">
+                <span class="module-tag">Module 2</span>
+                <h2>Operators, Bitwise & Expressions</h2>
+                <div class="concept-block">
+                    <h3>Core Concepts & Definitions</h3>
+                    <p>Operators formulate expressions evaluated by CPU ALU units based on <strong>Precedence</strong> (binding priority) and <strong>Associativity</strong> (left-to-right vs right-to-left).</p>
+                    <ul>
+                        <li><strong>Arithmetic & Assignment:</strong> `+`, `-`, `*`, `/`, `%` (only integer operands), shorthand: `+=`, `*=`.</li>
+                        <li><strong>Bitwise Operators:</strong> Direct binary bit manipulation: AND (`&`), OR (`|`), XOR (`^`), NOT (`~`), Left Shift (`<<` - multiplies by $2^k$), Right Shift (`>>` - divides by $2^k$).</li>
+                        <li><strong>Ternary Operator:</strong> Compact single-line conditional syntax `(condition) ? expr1 : expr2`.</li>
+                    </ul>
+                </div>
+
+                <span class="problem-badge">Problem 2.1: Bitwise Odd/Even & Power-of-Two Verifier</span>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n = 16;
+    // LSB is 0 for even, 1 for odd
+    if ((n & 1) == 0)
+        printf("%d is Even\n", n);
+    else
+        printf("%d is Odd\n", n);
+
+    // Power of 2 check: (n > 0) && (n & (n - 1)) == 0
+    if (n > 0 && (n & (n - 1)) == 0)
+        printf("%d is a power of 2\n", n);
+    return 0;
+}</code></pre>
+
+                <span class="problem-badge">Problem 2.2: Bitwise Value Swap without Temp Variable</span>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 25, b = 70;
+    printf("Before: a = %d, b = %d\n", a, b);
+    a = a ^ b;
+    b = a ^ b;
+    a = a ^ b;
+    printf("After:  a = %d, b = %d\n", a, b);
+    return 0;
+}</code></pre>
+            </section>
+
+            <!-- MODULE 3 -->
+            <section class="module" id="mod3">
+                <span class="module-tag">Module 3</span>
+                <h2>Control Flow & Branching</h2>
+                <div class="concept-block">
+                    <h3>Core Concepts & Definitions</h3>
+                    <p>Branching structures alter sequential CPU instruction execution via jump operations.</p>
+                    <ul>
+                        <li><strong>`if-else` / `else-if`:</strong> Evaluates boolean truth conditions (0 = False, Non-zero = True).</li>
+                        <li><strong>`switch-case`:</strong> Constant-expression dispatch table matching integers/characters. Requires `break` to prevent fall-through.</li>
+                        <li><strong>Jump Statements:</strong> `break` exits current loop/switch; `continue` skips to next cycle; `goto` executes unconditional jumps.</li>
+                    </ul>
+                </div>
+
+                <span class="problem-badge">Problem 3.1: Tariff Slabs with Surcharge Engine (Level 2)</span>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    float units = 250.0, bill = 0.0, surcharge = 0.0;
+    if (units <= 100) bill = units * 4.0;
+    else if (units <= 200) bill = (100 * 4.0) + (units - 100) * 6.0;
+    else bill = (100 * 4.0) + (100 * 6.0) + (units - 200) * 8.5;
+
+    if (bill > 400.0) surcharge = bill * 0.15;
+    printf("Total Due: Rs. %.2f\n", bill + 50.0 + surcharge);
+    return 0;
+}</code></pre>
+
+                <span class="problem-badge">Problem 3.2: Switch-Case Arithmetic State Engine</span>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    char op = '*';
+    double a = 12.0, b = 4.0;
+    switch(op) {
+        case '+': printf("Sum: %.2f\n", a + b); break;
+        case '-': printf("Diff: %.2f\n", a - b); break;
+        case '*': printf("Product: %.2f\n", a * b); break;
+        case '/': 
+            if(b != 0) printf("Quotient: %.2f\n", a / b);
+            else printf("Division by zero error!\n");
+            break;
+        default: printf("Unknown Operator\n");
+    }
+    return 0;
+}</code></pre>
+            </section>
+
+            <!-- MODULE 4 -->
+            <section class="module" id="mod4">
+                <span class="module-tag">Module 4</span>
+                <h2>Loops & Iterative Processing</h2>
+                <div class="concept-block">
+                    <h3>Core Concepts & Definitions</h3>
+                    <ul>
+                        <li><strong>`while` (Pre-tested):</strong> Evaluates condition prior to executing body. 0-iteration minimum.</li>
+                        <li><strong>`for` (Deterministic):</strong> Compact syntax combining initialization, condition test, and increment step.</li>
+                        <li><strong>`do-while` (Post-tested):</strong> Guaranteed minimum 1 execution cycle prior to testing condition.</li>
+                    </ul>
+                </div>
+
+                <span class="problem-badge">Problem 4.1: Decimal Palindrome Number Verifier</span>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int n = 12321, original = n, rev = 0;
+    while (n != 0) {
+        rev = (rev * 10) + (n % 10);
+        n /= 10;
+    }
+    if (original == rev) printf("%d is a Palindrome\n", original);
+    else printf("%d is Not Palindrome\n", original);
+    return 0;
+}</code></pre>
+
+                <span class="problem-badge">Problem 4.2: Prime Number Sieve Check</span>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdbool.h&gt;
+
+int main() {
+    int n = 37;
+    bool isPrime = (n > 1);
+    for (int i = 2; i * i <= n; i++) {
+        if (n % i == 0) { isPrime = false; break; }
+    }
+    printf("%d is %s\n", n, isPrime ? "Prime" : "Composite");
+    return 0;
+}</code></pre>
+            </section>
+
+            <!-- MODULE 5 -->
+            <section class="module" id="mod5">
+                <span class="module-tag">Module 5</span>
+                <h2>Functions, Scope & Storage Classes</h2>
+                <div class="concept-block">
+                    <h3>Core Concepts & Definitions</h3>
+                    <p>Functions isolate logic into discrete stack activation records.</p>
+                    <ul>
+                        <li><strong>Call by Value:</strong> Passes copies of argument data (caller variables remain untouched).</li>
+                        <li><strong>Call by Reference:</strong> Passes memory addresses via pointers, enabling direct mutation in caller scope.</li>
+                        <li><strong>Storage Classes:</strong> `auto` (default stack lifetime), `static` (persists value across lifetime of program), `extern` (global cross-file linkage), `register` (CPU register request).</li>
+                    </ul>
+                </div>
+
+                <span class="problem-badge">Problem 5.1: Call by Reference Value Swapper</span>
+                <pre><code>#include &lt;stdio.h&gt;
+
+void swapByRef(int *x, int *y) {
+    int temp = *x;
+    *x = *y;
+    *y = temp;
+}
+
+int main() {
+    int p = 10, q = 20;
+    swapByRef(&p, &q);
+    printf("p = %d, q = %d\n", p, q);
+    return 0;
+}</code></pre>
+
+                <span class="problem-badge">Problem 5.2: Stack Unwinding in Recursive GCD</span>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int gcd(int a, int b) {
+    if (b == 0) return a; // Base case
+    return gcd(b, a % b); // Tail recursion
+}
+
+int main() {
+    printf("GCD(48, 18) = %d\n", gcd(48, 18));
+    return 0;
+}</code></pre>
+            </section>
+
+            <!-- MODULE 6 -->
+            <section class="module" id="mod6">
+                <span class="module-tag">Module 6</span>
+                <h2>Arrays & String Manipulation</h2>
+                <div class="concept-block">
+                    <h3>Core Concepts & Definitions</h3>
+                    <p><strong>Arrays:</strong> Homogeneous contiguous blocks in memory accessed via index displacement: $\text{Addr}(A[i]) = \text{Base} + i \times \text{sizeof}(\text{Type})$.</p>
+                    <p><strong>Strings:</strong> Null-terminated character sequences (`char str[] = "text\0"`). The null byte `\0` signals string boundary to runtime routines.</p>
+                </div>
+
+                <span class="problem-badge">Problem 6.1: Matrix Transpose in Memory</span>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int mat[2][3] = {{1, 2, 3}, {4, 5, 6}};
+    int trans[3][2];
+
+    for(int i = 0; i < 2; i++) {
+        for(int j = 0; j < 3; j++) {
+            trans[j][i] = mat[i][j];
+        }
+    }
+    printf("Transposed Element [0][1]: %d\n", trans[0][1]);
+    return 0;
+}</code></pre>
+
+                <span class="problem-badge">Problem 6.2: String Inversion Without string.h</span>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    char str[] = "KatiharEngineering";
+    int len = 0;
+    while(str[len] != '\0') len++;
+
+    for(int i = 0, j = len - 1; i < j; i++, j--) {
+        char tmp = str[i];
+        str[i] = str[j];
+        str[j] = tmp;
+    }
+    printf("Reversed: %s\n", str);
+    return 0;
+}</code></pre>
+            </section>
+
+            <!-- MODULE 7 -->
+            <section class="module" id="mod7">
+                <span class="module-tag">Module 7</span>
+                <h2>Pointers & Memory Addressing</h2>
+                <div class="concept-block">
+                    <h3>Core Concepts & Definitions</h3>
+                    <p>Pointers store raw virtual memory addresses. Key aspects include:</p>
+                    <ul>
+                        <li><strong>Pointer Arithmetic:</strong> Incrementing (`ptr++`) scales address by `sizeof(*ptr)` bytes.</li>
+                        <li><strong>Double Pointers (`**ptr`):</strong> Pointers storing the address of another pointer variable.</li>
+                        <li><strong>Pathological States:</strong> Dangling (points to deallocated space), Wild (uninitialized garbage address), NULL (points safely to `(void*)0`).</li>
+                    </ul>
+                </div>
+
+                <span class="problem-badge">Problem 7.1: Array Traversal via Pointer Arithmetic</span>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int arr[] = {10, 20, 30, 40};
+    int *ptr = arr; // Base address
+    for (int i = 0; i < 4; i++) {
+        printf("Index %d: Address %p | Value: %d\n", i, (void*)(ptr + i), *(ptr + i));
+    }
+    return 0;
+}</code></pre>
+
+                <span class="problem-badge">Problem 7.2: Function Pointer Callback Dispatcher</span>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int add(int a, int b) { return a + b; }
+int multiply(int a, int b) { return a * b; }
+
+void executeOperation(int (*op)(int, int), int x, int y) {
+    printf("Result: %d\n", op(x, y));
+}
+
+int main() {
+    executeOperation(add, 5, 7);
+    executeOperation(multiply, 5, 7);
+    return 0;
+}</code></pre>
+            </section>
+
+            <!-- MODULE 8 -->
+            <section class="module" id="mod8">
+                <span class="module-tag">Module 8</span>
+                <h2>User-Defined Types: Structs, Unions & Enums</h2>
+                <div class="concept-block">
+                    <h3>Core Concepts & Definitions</h3>
+                    <ul>
+                        <li><strong>`struct`:</strong> Heterogeneous compound type. Total size $\ge \sum \text{member sizes}$ due to byte alignment/padding.</li>
+                        <li><strong>`union`:</strong> Shared overlapping memory space. Size matches the largest member only.</li>
+                        <li><strong>`typedef`:</strong> Creates convenient semantic aliases for complex type signatures.</li>
+                    </ul>
+                </div>
+
+                <span class="problem-badge">Problem 8.1: Student Records via Struct Pointers</span>
+                <pre><code>#include &lt;stdio.h&gt;
+
+typedef struct {
+    int roll;
+    char name[30];
+    float marks;
+} Student;
+
+int main() {
+    Student s1 = {101, "Arsh", 92.5};
+    Student *sPtr = &s1;
+    // Direct dereference via arrow operator (->)
+    printf("Roll: %d | Name: %s | Marks: %.2f\n", sPtr->roll, sPtr->name, sPtr->marks);
+    return 0;
+}</code></pre>
+
+                <span class="problem-badge">Problem 8.2: Memory Overlap in C Unions</span>
+                <pre><code>#include &lt;stdio.h&gt;
+
+union DataPacket {
+    int intVal;
+    float floatVal;
+    char charVal;
+};
+
+int main() {
+    union DataPacket packet;
+    packet.intVal = 65;
+    printf("Interpreted as int: %d\n", packet.intVal);
+    printf("Interpreted as char (overlap): %c\n", packet.charVal);
+    printf("Union Footprint: %zu bytes\n", sizeof(packet));
+    return 0;
+}</code></pre>
+            </section>
+
+            <!-- MODULE 9 -->
+            <section class="module" id="mod9">
+                <span class="module-tag">Module 9</span>
+                <h2>Dynamic Memory Allocation (Heap Operations)</h2>
+                <div class="concept-block">
+                    <h3>Core Concepts & Definitions</h3>
+                    <p>Allocates heap buffers at runtime when data sizes are variable or unknown at compile time.</p>
+                    <ul>
+                        <li>`malloc(bytes)`: Allocates uninitialized memory buffer. Returns `void*` or `NULL` if exhausted.</li>
+                        <li>`calloc(n, bytes)`: Allocates zero-initialized contiguous memory block.</li>
+                        <li>`realloc(ptr, new_bytes)`: Resizes existing block while preserving data.</li>
+                        <li>`free(ptr)`: Releases heap block back to OS pool (prevents memory leaks).</li>
+                    </ul>
+                </div>
+
+                <span class="problem-badge">Problem 9.1: Dynamic Array Allocation & Sum</span>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int n = 5;
+    int *arr = (int *)malloc(n * sizeof(int));
+    if (arr == NULL) return 1;
+
+    for (int i = 0; i < n; i++) arr[i] = (i + 1) * 10;
+    
+    int sum = 0;
+    for (int i = 0; i < n; i++) sum += arr[i];
+    printf("Heap Array Sum: %d\n", sum);
+
+    free(arr);
+    arr = NULL; // Prevent dangling pointer
+    return 0;
+}</code></pre>
+
+                <span class="problem-badge">Problem 9.2: Dynamic Buffer Expansion via realloc</span>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int *buffer = (int *)malloc(2 * sizeof(int));
+    buffer[0] = 100; buffer[1] = 200;
+
+    // Expand buffer from 2 to 4 integers
+    int *temp = (int *)realloc(buffer, 4 * sizeof(int));
+    if (temp != NULL) {
+        buffer = temp;
+        buffer[2] = 300; buffer[3] = 400;
+        printf("Buffer[3]: %d\n", buffer[3]);
+    }
+    free(buffer);
+    return 0;
+}</code></pre>
+            </section>
+
+            <!-- MODULE 10 -->
+            <section class="module" id="mod10">
+                <span class="module-tag">Module 10</span>
+                <h2>File I/O & Persistent Disk Streams</h2>
+                <div class="concept-block">
+                    <h3>Core Concepts & Definitions</h3>
+                    <p>File handling links the program to permanent storage streams using the opaque `FILE *` handle.</p>
+                    <ul>
+                        <li><strong>Stream Modes:</strong> `"r"` (read), `"w"` (overwrite), `"a"` (append), `"rb"`/`"wb"` (binary).</li>
+                        <li><strong>Random Access:</strong> `fseek(fp, offset, origin)` positions cursor (`SEEK_SET`, `SEEK_CUR`, `SEEK_END`), `ftell(fp)` reports byte offset, `rewind(fp)` resets cursor.</li>
+                    </ul>
+                </div>
+
+                <span class="problem-badge">Problem 10.1: Writing & Reading Text Records</span>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    FILE *fp = fopen("output.txt", "w");
+    if (!fp) return 1;
+    fprintf(fp, "Token: %d Rate: %.2f\n", 404, 99.5);
+    fclose(fp);
+
+    fp = fopen("output.txt", "r");
+    int token; float rate;
+    fscanf(fp, "Token: %d Rate: %f", &token, &rate);
+    printf("Read from disk -> Token: %d, Rate: %.2f\n", token, rate);
+    fclose(fp);
+    return 0;
+}</code></pre>
+
+                <span class="problem-badge">Problem 10.2: Binary Struct Persistence with fread/fwrite</span>
+                <pre><code>#include &lt;stdio.h&gt;
+
+typedef struct { int id; double balance; } Account;
+
+int main() {
+    Account acc1 = {9001, 45200.75};
+    FILE *fp = fopen("acc.bin", "wb");
+    fwrite(&acc1, sizeof(Account), 1, fp);
+    fclose(fp);
+
+    Account accLoaded;
+    fp = fopen("acc.bin", "rb");
+    fread(&accLoaded, sizeof(Account), 1, fp);
+    printf("Loaded Account ID: %d | Bal: Rs. %.2f\n", accLoaded.id, accLoaded.balance);
+    fclose(fp);
+    return 0;
+}</code></pre>
+            </section>
+
+            <!-- MODULE 11 -->
+            <section class="module" id="mod11">
+                <span class="module-tag">Module 11</span>
+                <h2>Preprocessor Directives & CLI Mechanics</h2>
+                <div class="concept-block">
+                    <h3>Core Concepts & Definitions</h3>
+                    <ul>
+                        <li><strong>Macros (`#define`):</strong> Text substitutions executed before compilation. Function macros must use outer parentheses to prevent precedence bugs.</li>
+                        <li><strong>Conditional Compilation:</strong> `#ifdef`, `#ifndef`, `#endif` prevent multiple inclusions (Include Guards).</li>
+                        <li><strong>CLI Arguments (`argc`, `argv`):</strong> System parameters passed into `main(int argc, char *argv[])`.</li>
+                    </ul>
+                </div>
+
+                <span class="problem-badge">Problem 11.1: Macro Hygiene with Guarded Expressions</span>
+                <pre><code>#include &lt;stdio.h&gt;
+
+#define SQUARE(x) ((x) * (x))
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+
+int main() {
+    int res = SQUARE(3 + 2); // Evaluates properly to ((3 + 2) * (3 + 2)) = 25
+    printf("Square Result: %d\n", res);
+    printf("Max: %d\n", MAX(10, 25));
+    return 0;
+}</code></pre>
+
+                <span class="problem-badge">Problem 11.2: Command Line Argument Parser</span>
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[]) {
+    printf("Total Arguments: %d\n", argc);
+    if (argc >= 3) {
+        int val1 = atoi(argv[1]);
+        int val2 = atoi(argv[2]);
+        printf("Sum of CLI inputs: %d\n", val1 + val2);
+    } else {
+        printf("Usage: %s &lt;num1&gt; &lt;num2&gt;\n", argv[0]);
+    }
+    return 0;
+}</code></pre>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Arsh. Engineered C Systems Architecture Reference.</p>
+    </footer>
+
+</body>
+</html>
